@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hasura
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: hasura
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hasura-deployment
+  labels:
+    app: hasura
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hasura
+  template:
+    metadata:
+      labels:
+        app: hasura
+    spec:
+      containers:
+        - name: hasura
+          image: hasura/graphql-engine
+          ports:
+            - containerPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hasura-ingress
+  namespace: hasura
+  annotations:
+    cert-manager.io/issuer: prod-issuer
+    cert-manager.io/issuer-kind: OriginIssuer
+    cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: hasura.rurich.dev
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            path: /
+            backend:
+              service:
+                name: hasura
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - hasura.rurich.dev
+      secretName: hasura-tls

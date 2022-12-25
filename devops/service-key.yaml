@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  key: djEuMC03ZDNlNzBkOTFjMDk5Y2RkMTEwNTQ3YmUtMmFlM2MwN2RkMTIyZGExMGU5ZmYzNTlhZTIyZjJjOGQ5YmMyNTMzN2Y3MTRjYjE0ZTc1NGY4YTAxYTA0YjMzMGQ2OTc2ZDFhM2MzNTczZGNlN2Y3ZTQ0ZTAzZGY4YzcyOWM4MWU0NmUxN2U4MjQxMjliNzliMjdkNDcyNTcxNTFlYTIwY2M2ZjhmMjE2MWQwYTAK
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: service-key
+  namespace: default
